@@ -1,0 +1,3 @@
+class DinheiroField < NumberField
+
+end

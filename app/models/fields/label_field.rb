@@ -1,0 +1,2 @@
+class LabelField < Field
+end

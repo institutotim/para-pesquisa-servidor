@@ -1,0 +1,2 @@
+class OrderedlistField < SelectField
+end

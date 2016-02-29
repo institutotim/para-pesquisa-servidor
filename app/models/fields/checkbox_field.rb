@@ -1,0 +1,2 @@
+class CheckboxField < SelectField
+end

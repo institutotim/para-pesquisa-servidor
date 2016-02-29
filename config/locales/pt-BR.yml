@@ -1,0 +1,264 @@
+pt-BR:
+  options_need_to_be_an_array: "Opções precisam ser encapsuladas em um array. Recebido: '%{options}'"
+  field_is_required: "O campo '%{field}' é obrigatório"
+  the_value_isnt_between_the_range: "O valor dado a '%{value}' não está entre '%{range}'"
+  field_isnt_of_this_form: O Campo informado não pertence a este formulário
+  url_isnt_valid: "URL '%{url}' não é valida"
+  value_isnt_a_number: "O valor '%{value}' não é um número"
+  email_isnt_valid: 'E-mail %{email} não é válido'
+  date_is_invalid: "Data '%{date}' é inválida"
+  cpf_isnt_valid: '%{cpf} não é um CPF válido'
+  cant_transfer_submissions_of_users_that_are_not_agents: Não é possível transferir submissões de usuários que não são pesquisadores.
+  moderator_not_found: Moderador não encontrado
+  user_has_passed_of_its_target: Este usuário já passou da sua meta
+  the_user_has_no_permission_to_this_form: O usuário não está designado para usar esse formulário
+  has_submissions_pre_registered_you_cant_create_manually: Este formulário utiliza submissões pré-cadastradas, não é possível criar uma nova manualmente.
+  cant_show_statistics_of_user_with_api_permission: Não é possível ver estatísticas de usuário com permissões de API
+  try_to_import_overwrite_to_a_diferent_user: Tentativa de importar substituição para um usuário diferente
+  user_attribution_is_required: Campo de atribuição de usuário é obrigatório
+  page_1: Página 1
+  column_not_found: 'Coluna não encontrada %{column}'
+  this_form_has_already_started_with_manual_searches: Este formulário já foi iniciado com pesquisas manuais
+  form_not_found: Formulário não encontrado
+  invalid: inválido
+  csv_with_bad_format: 'CSV mal formatado: %{message}'
+  file_isnt_utf8_encode: O arquivo não se encontra no formato UTF-8
+  undefined_separator: Separador desconhecido
+  sub_name_to_copy: ' - Cópia'
+  job_not_found: Job não encontrado.
+  id_of_job_cant_be_blank: O ID do Job não pode ser vazio.
+  order: Ordem
+  response: Resposta
+  type: Tipo
+  approval_date: Data de aprovação
+  filing_date: Data de preenchimento
+  creation_at: Data de criação
+  subtitle: Subtítulo
+  title: Título
+  export_in_process: Uma exportação já está em progresso.
+  upload_error_try_again: Não foi possível fazer o upload do arquivo no momento. Tente novamente mais tarde
+  job_title: Cargo
+  created_at: Data de cadastro
+  email: E-mail
+  user_name: Nome de usuário
+  name: Nome
+  administrator: Administrador
+  research: Pesquisador
+  coordinator: Coordenador
+  the_questionnaires_is_greater_than_target: O número de questionários cadastrados para essa designação é maior do que a meta informada
+  access_denied: Acesso negado.
+  date:
+    abbr_day_names:
+    - Dom
+    - Seg
+    - Ter
+    - Qua
+    - Qui
+    - Sex
+    - Sáb
+    abbr_month_names:
+    -
+    - Jan
+    - Fev
+    - Mar
+    - Abr
+    - Mai
+    - Jun
+    - Jul
+    - Ago
+    - Set
+    - Out
+    - Nov
+    - Dez
+    day_names:
+    - Domingo
+    - Segunda
+    - Terça
+    - Quarta
+    - Quinta
+    - Sexta
+    - Sábado
+    formats:
+      default: ! '%d/%m/%Y'
+      long: ! '%d de %B de %Y'
+      short: ! '%d de %B'
+    month_names:
+    -
+    - Janeiro
+    - Fevereiro
+    - Março
+    - Abril
+    - Maio
+    - Junho
+    - Julho
+    - Agosto
+    - Setembro
+    - Outubro
+    - Novembro
+    - Dezembro
+    order:
+    - :day
+    - :month
+    - :year
+  datetime:
+    distance_in_words:
+      about_x_hours:
+        one: aproximadamente 1 hora
+        other: aproximadamente %{count} horas
+      about_x_months:
+        one: aproximadamente 1 mês
+        other: aproximadamente %{count} meses
+      about_x_years:
+        one: aproximadamente 1 ano
+        other: aproximadamente %{count} anos
+      almost_x_years:
+        one: quase 1 ano
+        other: quase %{count} anos
+      half_a_minute: meio minuto
+      less_than_x_minutes:
+        one: menos de um minuto
+        other: menos de %{count} minutos
+      less_than_x_seconds:
+        one: menos de 1 segundo
+        other: menos de %{count} segundos
+      over_x_years:
+        one: mais de 1 ano
+        other: mais de %{count} anos
+      x_days:
+        one: 1 dia
+        other: ! '%{count} dias'
+      x_minutes:
+        one: 1 minuto
+        other: ! '%{count} minutos'
+      x_months:
+        one: 1 mês
+        other: ! '%{count} meses'
+      x_seconds:
+        one: 1 segundo
+        other: ! '%{count} segundos'
+    prompts:
+      day: Dia
+      hour: Hora
+      minute: Minuto
+      month: Mês
+      second: Segundo
+      year: Ano
+  errors: &errors
+    models:
+      user:
+        attributes:
+          password_confirmation:
+            confirmation: "As senhas não conferem."
+    format: ! '%{attribute} %{message}'
+    messages:
+      accepted: deve ser aceito
+      blank: não pode ficar em branco
+      present: deve ficar em branco
+      confirmation: não está de acordo com a confirmação
+      empty: não pode ficar vazio
+      equal_to: deve ser igual a %{count}
+      even: deve ser par
+      exclusion: não está disponível
+      greater_than: deve ser maior que %{count}
+      greater_than_or_equal_to: deve ser maior ou igual a %{count}
+      inclusion: não está incluído na lista
+      invalid: não é válido
+      less_than: deve ser menor que %{count}
+      less_than_or_equal_to: deve ser menor ou igual a %{count}
+      not_a_number: não é um número
+      not_an_integer: não é um número inteiro
+      odd: deve ser ímpar
+      record_invalid: ! 'A validação falhou: %{errors}'
+      restrict_dependent_destroy:
+        one: "Não é possível excluir o registro pois existe um %{record} dependente"
+        many: "Não é possível excluir o registro pois existem %{record} dependentes"
+      taken: já está em uso
+      too_long: ! 'é muito longo (máximo: %{count} caracteres)'
+      too_short: ! 'é muito curto (mínimo: %{count} caracteres)'
+      wrong_length: não possui o tamanho esperado (%{count} caracteres)
+    template:
+      body: ! 'Por favor, verifique o(s) seguinte(s) campo(s):'
+      header:
+        one: ! 'Não foi possível gravar %{model}: 1 erro'
+        other: ! 'Não foi possível gravar %{model}: %{count} erros.'
+  helpers:
+    select:
+      prompt: Por favor selecione
+    submit:
+      create: Criar %{model}
+      submit: Salvar %{model}
+      update: Atualizar %{model}
+  number:
+    currency:
+      format:
+        delimiter: .
+        format: ! '%u %n'
+        precision: 2
+        separator: ! ','
+        significant: false
+        strip_insignificant_zeros: false
+        unit: R$
+    format:
+      delimiter: .
+      precision: 3
+      separator: ! ','
+      significant: false
+      strip_insignificant_zeros: false
+    human:
+      decimal_units:
+        format: ! '%n %u'
+        units:
+          billion:
+            one: bilhão
+            other: bilhões
+          million:
+            one: milhão
+            other: milhões
+          quadrillion:
+            one: quatrilhão
+            other: quatrilhões
+          thousand: mil
+          trillion:
+            one: trilhão
+            other: trilhões
+          unit: ''
+      format:
+        delimiter: .
+        precision: 2
+        significant: true
+        strip_insignificant_zeros: true
+      storage_units:
+        format: ! '%n %u'
+        units:
+          byte:
+            one: Byte
+            other: Bytes
+          gb: GB
+          kb: KB
+          mb: MB
+          tb: TB
+    percentage:
+      format:
+        delimiter: .
+    precision:
+      format:
+        delimiter: .
+  support:
+    array:
+      last_word_connector: ! ' e '
+      two_words_connector: ! ' e '
+      words_connector: ! ', '
+  time:
+    am: ''
+    formats:
+      default: ! '%a, %d de %B de %Y, %H:%M:%S %z'
+      long: ! '%d de %B de %Y, %H:%M'
+      short: ! '%d de %B, %H:%M'
+    pm: ''
+  # remove these aliases after 'activemodel' and 'activerecord' namespaces are removed from Rails repository
+  activemodel:
+    errors:
+      <<: *errors
+  activerecord:
+    errors:
+      <<: *errors

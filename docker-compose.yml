@@ -1,0 +1,32 @@
+redis:
+  restart: always
+  labels:
+    io.rancher.scheduler.affinity:host_label: project=para-pesquisa,tier=database
+  tty: true
+  image: redis:2.8
+  stdin_open: true
+para-pesquisa-api:
+  restart: always
+  environment:
+    PORT: '80'
+  labels:
+    io.rancher.scheduler.affinity:host_label: tier=web
+  tty: true
+  image: ntxcode/para-pesquisa-api
+  links:
+  - redis:redis
+  - postgres:postgres
+  stdin_open: true
+  environment:
+      DATABASE_URL: postgres://para-pesquisa:para-pesquisa@postgres:5432/para-pesquisa
+postgres:
+  restart: always
+  labels:
+    io.rancher.scheduler.affinity:host_label: project=para-pesquisa,tier=database
+  tty: true
+  image: ntxcode/postgresql:9.4
+  stdin_open: true
+  environment:
+    POSTGRES_USER: para-pesquisa
+    POSTGRES_PASSWORD: para-pesquisa
+    POSTGRES_DB: para-pesquisa

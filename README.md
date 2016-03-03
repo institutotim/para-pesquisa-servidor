@@ -242,16 +242,16 @@ O Painel Administrativo é um aplicativo HTML5 que permite você gerenciar a
 sua instalação do Para Pesquisa. É através dele que usuários e formulários são
 criados e dados são exportados.
 
-    cd /home/para_pesquisa
-    git clone https://github.com/LaFabbrica/para-pesquisa-painel
+Para gerar uma build que aponta para o seu servidor siga as [instruções do repositório](https://github.com/institutotim/para-pesquisa-painel). 
 
-A partir deste ponto basta criar uma entrada no nginx para que sirva os arquivos do painel da pasta `app`.
- O seguinte exemplo poderia ser utilizado em `/etc/nginx/sites-enabled/para-pesquisa-painel`:
+Após isso basta copiar a pasta `app/dist` para `/home/para_pesquisa/para-pesquisa-painel/app` e criar uma entrada no 
+nginx para que sirva os arquivos do painel.
+O seguinte exemplo poderia ser utilizado em `/etc/nginx/sites-enabled/para-pesquisa-painel`:
 
     server {
             listen 80;
             server_name meu-para-pesquisa.org.br;
-            root /home/para_pesquisa/para-pesquisa-painel/app;
+            root /home/para_pesquisa/para-pesquisa-painel;
             index index.html;
     }
     

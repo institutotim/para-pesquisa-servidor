@@ -35,19 +35,20 @@ Existem diversas outras estratégias que utilizam outros softwares para deploy
 disponíveis, consulte a [documentação oficial](http://rubyonrails.org/deploy)
  do Ruby on Rails para mais informações.
 
-### Instalação em servidor Ubuntu 12.04
+### Instalação em servidor Ubuntu 14.04
 
 A seguir demonstramos a instalação da aplicação em um servidor Ubuntu
 utilizando nginx como proxy reverso configurado para rodar no mesmo servidor.
  Em situações de deploys reais é necessário considerar o uso de load
  balancing para a camada HTTP, clusterização para o [Redis](http://redis
  .io/topics/cluster-tutorial) e [PostgreSQL](http://wiki.postgresql
- .org/wiki/Replication,_Clustering,_and_Connection_Pooling).
+ .org/wiki/Replication,_Clustering,_and_Connection_Pooling). Além disso é necessário seguir as [instruções de segurança
+ de instalações Rails](http://guides.rubyonrails.org/security.html), incluindo mas não limitado a troca do Secret Token.
 
-É assumido uma instalação nova, sem nenhum pacote extra instalado,
+É assumido uma instalação nova na imagem de 64 bits, sem nenhum pacote extra instalado,
 logado em usuário não previlegiado.
 
-#### Instalando ruby 2.0
+#### Instalando ruby 2.1.7
 
 Atualize os repositórios:
 
@@ -60,9 +61,9 @@ Instale as dependências para compilação do ruby:
 Baixe e prepare o código fonte para build:
 
     cd /tmp
-    wget http://cache.ruby-lang.org/pub/ruby/2.0/ruby-2.0.0-p353.tar.gz
-    tar -xvzf ruby-2.0.0-p353.tar.gz
-    cd ruby-2.0.0-p353/
+    wget https://cache.ruby-lang.org/pub/ruby/2.1/ruby-2.1.7.tar.gz
+    tar -xvzf ruby-2.1.7.tar.gz
+    cd ruby-2.1.7/
     ./configure --prefix=/usr/local
 
 Compile:
@@ -95,24 +96,27 @@ primeiramente adicione o repositório do postgres ao sources.list:
 
 Após isso atualize e instale:
 
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
     sudo apt-get -y update
     sudo apt-get -y --force-yes install postgresql-9.3 postgresql-server-dev-9.3
-
-#### Instale o Git
-
-    sudo apt-get -y install git-core
 
 #### Crie o usuário para rodar a aplicação:
 
     sudo adduser --disabled-password --gecos "" para_pesquisa
 
+#### Instale o Git
+
+    sudo apt-get -y install git-core
+
 #### Baixe a API
 
+    sudo su para_pesquisa
     cd /home/para_pesquisa
-    git clone https://github.com/LaFabbrica/para-pesquisa-servidor.git
+    git clone https://github.com/institutotim/para-pesquisa-servidor.git
 
 #### Instalando o bundler
 
+    exit # voltando ao usuário com acesso ao sudo
     cd para-pesquisa-servidor
     sudo gem install bundler
 
@@ -139,17 +143,19 @@ Após isso atualize e instale:
 Na pasta onde clonou o repositório altere o arquivo config/database.yml com a
 senha que você inseriu no comando anterior.
 
+    sudo su - para_pesquisa -c 'nano /home/para_pesquisa/para-pesquisa-servidor/config/database.yml'
+
 #### Baixe o nodejs para executar os comandos de criação do banco e dos usuários base:
 
     sudo apt-get install nodejs
 
 #### Crie a estrutura no banco de dados
 
-    bundle exec rake db:migrate
+    sudo su para_pesquisa -c 'RACK_ENV=production bundle exec rake db:migrate'
 
 #### Crie o usuário administrador
 
-    bundle exec rake db:seed
+    sudo su para_pesquisa -c 'RACK_ENV=production bundle exec rake db:seed'
 
 #### Instale o aplicativo no upstart
 
@@ -162,25 +168,26 @@ Crie o arquivo de configuração para que o aplicativo seja controlado pelo
 upstart em `/etc/init/para-pesquisa.conf`:
 
     description "Para Pesquisa - API"
-
+    
     start on runlevel [2345]
     stop on runlevel [!2345]
-
+    
     respawn
     respawn limit 5 20
-
-    env PORT=8080
-    env HOST=127.0.0.1
     
-    env AWS_ACCESS_KEY_ID=Sua Access Key do S3
-    env AWS_SECRET_ACCESS_KEY=Sua Secret Key do S3
-    env AWS_BUCKET=Seu bucket
-
+    env PORT=8080
+    env HOST=0.0.0.0
+    env RACK_ENV=production
+    
+    env AWS_ACCESS_KEY_ID="Sua Access Key do S3"
+    env AWS_SECRET_ACCESS_KEY="Sua Secret Key do S3"
+    env AWS_BUCKET="Seu bucket"
+    
     setuid para_pesquisa
     setgid para_pesquisa
-
+    
     chdir /home/para_pesquisa/para-pesquisa-servidor
-
+    
     exec bundle exec unicornherder -u unicorn -- -o $HOST --port $PORT -c config/unicorn.rb
     
 Se você deseja utilizar as funcionalidades de exportação por CSV é necessário 
@@ -199,13 +206,11 @@ arquivos estáticos da API e Painel Administrativo.
 
     sudo apt-get install -y nginx
 
-
 Para que o nginx seja usado como proxy reverso ao servidor unicorn da API, uma
 entrada como a seguinte poderia ser utilizada em `/etc/nginx/sites-enabled/para-pesquisa-servidor`.
 
       upstream unicorn_server {
        server 127.0.0.1:8080 fail_timeout=0;
-       fail_timeout=0;
       }
 
       server {
@@ -234,7 +239,8 @@ entrada como a seguinte poderia ser utilizada em `/etc/nginx/sites-enabled/para-
         }
       }
 
-Note `large_client_header_buffers` com o limite de `32k`. Um cabeçalho com timestamps é enviado durante a sincronização e pode ultrapassar o limite padrão de tamanho do nginx.
+Note `large_client_header_buffers` com o limite de `32k`. Um cabeçalho com timestamps é enviado durante a sincronização 
+e pode ultrapassar o limite padrão de tamanho do nginx.
 
 #### Baixe o painel administrativo
 
@@ -251,25 +257,13 @@ O seguinte exemplo poderia ser utilizado em `/etc/nginx/sites-enabled/para-pesqu
     server {
             listen 80;
             server_name meu-para-pesquisa.org.br;
-            root /home/para_pesquisa/para-pesquisa-painel;
+            root /home/para_pesquisa/para-pesquisa-painel/app/dist;
             index index.html;
     }
     
 Após criar ambos arquivos de configuração no nginx, é necessário reiniciar o serviço, para que as mudanças sejam aplicadas:
 
     sudo service nginx restart
-
-Por padrão o painel irá tentar conectar na API através do mesmo domínio ao qual ele é acessado, na porta `8085` configurada acima. Caso você deseje trocar a URL da API para o seu domínio e/ou porta realize os seguintes passos:
-
-##### Navegue onde você realizou o download do painel
- 
-    cd /home/para_pesquisa/para-pesquisa-painel
-    
-##### Troque a URL padrão pela sua API
-
-Basta trocar `http:\/\/api.exemplo.org.br` no comando abaixo pela URL da sua API. Lembre-se de manter `\/` ao invés de `/` para que o comando interprete o caracter corretamente.
-
-    sed -i '' 's/\(url\: \)\(undefined\)/\1"http:\/\/api.exemplo.org.br"/' app/index.html
 
 ## Usuários pré cadastrados
 Por padrão, a aplicação está disponibilizada com três usuários para testes:

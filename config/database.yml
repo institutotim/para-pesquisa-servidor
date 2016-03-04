@@ -1,0 +1,18 @@
+production: &default
+  adapter: postgresql
+  database: para_pesquisa
+  username: para_pesquisa
+  password:
+  encoding: unicode
+  pool: 5
+  timeout: 5000
+
+development:
+  <<: *default
+  database: para_pesquisa_dev
+
+test:
+  adapter: sqlite3
+  database: db/test.sqlite3
+  pool: 5
+  timeout: 5000

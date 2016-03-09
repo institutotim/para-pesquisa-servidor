@@ -26,7 +26,7 @@ class StatisticsController < ApplicationController
     submissions = form.submissions
 
     statistics = Submission::STATUS.inject({}) do |hash, status|
-      hash[status] = submissions.count(conditions: {status: status}) unless status == 'new'
+      hash[status] = submissions.where(status: status).count unless status == 'new'
       hash
     end
 

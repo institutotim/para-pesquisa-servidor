@@ -45,11 +45,11 @@ class Submission < ActiveRecord::Base
     self.log.create! action: 'reproved', user: user, date: date || DateTime.now
   end
 
-  def transfer(user, date=nil)
+  def transfer(user, assignment=nil, date=nil)
     self.log.create! action: 'transferred', user: self.user, date: date || DateTime.now
     self.user = user
-    self.assignment = user.assignment.find_by(form_id: self.form_id)
-    self.save
+    self.assignment = assignment || user.assignment.find_by(form_id: self.form_id)
+    self.save!
   end
 
   def reset(user)

@@ -123,10 +123,10 @@ class SubmissionsController < ApplicationController
   end
 
   def transfer_by_form_id
-    submissions = Submission.where(user_id: params[:user_id_from], form_id: params[:form_id])
-    user_to     = User.find(params[:user_id_to])
+    source_assignment = Assignment.find_by(user_id: params[:user_id_from], form_id: params[:form_id])
+    target_assignment = Assignment.find_by(user_id: params[:user_id_to], form_id: params[:form_id])
 
-    submissions.each { |submission| submission.transfer(user_to, params[:date]) }
+    source_assignment.transfer_submissions(target_assignment)
 
     json_set_status :no_content
   end

@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/institutotim/para-pesquisa-servidor.svg?branch=master)](https://travis-ci.org/institutotim/para-pesquisa-servidor)
 [![Code Climate](https://codeclimate.com/github/institutotim/para-pesquisa-servidor/badges/gpa.svg)](https://codeclimate.com/github/institutotim/para-pesquisa-servidor)
 
 Para Pesquisa

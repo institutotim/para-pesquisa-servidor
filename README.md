@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/institutotim/para-pesquisa-servidor/badges/gpa.svg)](https://codeclimate.com/github/institutotim/para-pesquisa-servidor)
+
 Para Pesquisa
 =============
 
